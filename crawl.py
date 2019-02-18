@@ -34,19 +34,6 @@ for idx, date in enumerate(start[:-1]):
 	timeTuples.append((timeConvert(date),timeConvert(start[idx+1])))
 timeTuples.append((timeConvert('2016-12-01'),timeConvert('2016-12-31')))
 
-
-# Time formatting
-after = time.mktime(datetime.datetime.strptime(after, '%Y-%m-%d').timetuple())
-after = int(after)
-readable_after = time.strftime('%d %b %Y %I:%M %p', time.localtime(after))
-before = time.mktime(datetime.datetime.strptime(before, '%Y-%m-%d').timetuple())
-before = int(before) + 86399
-readable_before = time.strftime('%d %b %Y %I:%M %p', time.localtime(before))
-#print('Searching for posts between ' + readable_after + ' and ' + readable_before + '.')
-currentDate = before
-
-
-
 # Fetch using psaw
 def fetch(k,sub, af, be):
 	api = PushshiftAPI()
@@ -70,29 +57,30 @@ def fetch_all():
 				if filename[5:] in os.listdir('data/'):
 					print(filename+' already present \n')
 				else:
-
+					# Search first name
 					start = time.time()
 					print('First...')
 					first = [e.d_ for e in fetch(candidate[0], sub, int(tup[0]), int(tup[1]))]
 					end = time.time()
 					print('...Done in '+str(end - start))
 
-
+					# Search last name
 					start = time.time()
 					print('Second...')
 					second = [e.d_ for e in fetch(candidate[1], sub, int(tup[0]), int(tup[1]))]
 					end = time.time()
 					print('...Done in '+str(end - start))
 
+					# Merge and remove duplicates
 					start = time.time()
 					print('Comments...')
 					#comments = [i for n, i in enumerate(first+second) if i not in (first+second)[n + 1:]]
 					comments = [dict(t) for t in {tuple(d.items()) for d in (first+second)}]
 					end = time.time()
 					print('...Done in '+str(end - start))
-
 					print(len(comments))
 					
+					# Save to file
 					start = time.time()		
 					print('Saving to file...')
 					with open(filename, 'w') as outfile:
@@ -100,13 +88,5 @@ def fetch_all():
 					end = time.time()
 					print('...Done in '+str(end - start))
 
-			# Fetch with first and second query, and merge
-			#filename = 'data/'+candidate[0]+candidate[1]+'_'+after+'_to_'+before+'_size_'+str(size)+'.json'
-
-
-
 fetch_all()
 
-#print(len(first))
-#print(len(second))
-#print(len(comments))
