@@ -52,6 +52,7 @@ def fetch_all():
 	for sub in subs:
 		for candidate in candidates:
 			for tup in timeTuples:
+				#Describtive filepath (saves in /data)
 				filename = 'data/'+candidate[1]+'_'+sub+'_'+timeInverter(tup[0])+'_'+timeInverter(tup[1])+'.json'
 				print('searching for '+filename)						
 				if filename[5:] in os.listdir('data/'):
