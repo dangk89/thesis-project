@@ -1,7 +1,8 @@
 import json
 import os
+import pprint
 
-def counter():
+def commentCounter():
 	count = 0
 	trump_c = 0
 	hil_c = 0
@@ -31,4 +32,12 @@ def counter():
 	print('bernie: '+str(bern_c))
 	print('total comments: '+str(count))
 
-counter()
+#commentCounter()
+
+def submissionCounter():
+	with open('articles.json') as f:
+		data = json.load(f)
+	pretty_dict_str = pprint.pformat(data[0][0])
+	pprint.pprint(pretty_dict_str)
+
+submissionCounter()
