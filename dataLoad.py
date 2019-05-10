@@ -40,4 +40,5 @@ def submissionCounter():
 	pretty_dict_str = pprint.pformat(data[0][0])
 	pprint.pprint(pretty_dict_str)
 
-submissionCounter()
+submissionCounter(
+)
