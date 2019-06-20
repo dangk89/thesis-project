@@ -14,16 +14,23 @@ def timeInverter(epoch):
 	return time.strftime('%Y-%m-%d', time.localtime(epoch))
 
 
-
-
 # List of epoch times for iteration
 start = []
 timeTuples = []
+for i in ["%.2d" % i for i in range(3,13)]:
+	start.append('2015-'+i+'-01')
+for idx, date in enumerate(start[:-1]):
+	timeTuples.append((timeConvert(date),timeConvert(start[idx+1])))
+timeTuples.append((timeConvert('2015-12-01'),timeConvert('2015-12-31')))
+
+
+start = []
 for i in ["%.2d" % i for i in range(1,13)]:
 	start.append('2016-'+i+'-01')
 for idx, date in enumerate(start[:-1]):
 	timeTuples.append((timeConvert(date),timeConvert(start[idx+1])))
 timeTuples.append((timeConvert('2016-12-01'),timeConvert('2016-12-31')))
+
 
 
 # Fetch using psaw
@@ -40,8 +47,8 @@ def fetch(sub, af, be):
 
 
 topArticles = []
-currDate = 1451610061
-for i in range(365):
+currDate = 1425164400
+for i in range(671):
 
 	day = fetch('politics', str(currDate),str(currDate+24*60*60))
 	day.sort(key=lambda x: x.num_comments)

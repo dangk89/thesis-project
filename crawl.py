@@ -34,6 +34,9 @@ for idx, date in enumerate(start[:-1]):
 	timeTuples.append((timeConvert(date),timeConvert(start[idx+1])))
 timeTuples.append((timeConvert('2016-12-01'),timeConvert('2016-12-31')))
 
+timeTuples = []
+timeTuples.append((timeConvert('2015-11-01'),timeConvert('2015-12-01')))
+
 # Fetch using psaw
 def fetch(k,sub, af, be):
 	api = PushshiftAPI()
